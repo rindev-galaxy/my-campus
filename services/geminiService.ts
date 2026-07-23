@@ -2,8 +2,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AttendanceRecord, Student, AIInsight, StudySchedule } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
+const getAi = () => new GoogleGenAI({ apiKey: process.env.API_KEY || "missing_key" });
 export async function getAttendanceInsights(
   records: AttendanceRecord[],
   students: Student[]
@@ -21,6 +20,7 @@ export async function getAttendanceInsights(
   ${JSON.stringify(dataForAi, null, 2)}`;
 
   try {
+    const ai = getAi();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
@@ -85,6 +85,7 @@ export async function getStudySuggestions(schedules: StudySchedule[]): Promise<s
   `;
 
   try {
+    const ai = getAi();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt
