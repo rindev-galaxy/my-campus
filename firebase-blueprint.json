@@ -1,0 +1,132 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profiles for teachers and students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["Teacher", "Student", "Unknown"] },
+        "classId": { "type": "string" },
+        "assignedSubjects": { "type": "array", "items": { "type": "string" } },
+        "telegram": { "type": "string" },
+        "gmail": { "type": "string" },
+        "avatarUrl": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Daily attendance records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "classId": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "type": "string", "enum": ["Present", "Absent", "Late"] },
+        "reason": { "type": "string" }
+      },
+      "required": ["id", "studentId", "classId", "date", "status"]
+    },
+    "StudentScore": {
+      "title": "StudentScore",
+      "description": "Academic scores for students",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "grade": {
+          "type": "object",
+          "properties": {
+            "participation": { "type": "number" },
+            "homework": { "type": "number" },
+            "exam": { "type": "number" },
+            "final": { "type": "number" }
+          },
+          "required": ["participation", "homework", "exam", "final"]
+        },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["studentId", "subjectName", "grade", "lastUpdated"]
+    },
+    "StudentEvaluation": {
+      "title": "StudentEvaluation",
+      "description": "Teacher evaluations of students",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "student_id": { "type": "string" },
+        "teacher_id": { "type": "string" },
+        "subject": { "type": "string" },
+        "evaluation_title": { "type": "string" },
+        "evaluation_comment": { "type": "string" },
+        "score": { "type": "number" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "student_id", "teacher_id", "subject", "evaluation_title", "evaluation_comment", "date"]
+    },
+    "StudySchedule": {
+      "title": "StudySchedule",
+      "description": "Student study planner items",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "student_id": { "type": "string" },
+        "subject_name": { "type": "string" },
+        "date": { "type": "string" },
+        "start_time": { "type": "string" },
+        "end_time": { "type": "string" },
+        "description": { "type": "string" },
+        "is_completed": { "type": "boolean" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["id", "student_id", "subject_name", "date", "start_time", "end_time", "is_completed", "created_at"]
+    },
+    "StudyNote": {
+      "title": "StudyNote",
+      "description": "Student study notes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "student_id": { "type": "string" },
+        "title": { "type": "string" },
+        "text_content": { "type": "string" },
+        "image_url": { "type": "string" },
+        "subject_name": { "type": "string" },
+        "schedule_datetime": { "type": "string" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["id", "student_id", "title", "text_content", "subject_name", "created_at", "updated_at"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/attendance/{recordId}": {
+      "schema": "AttendanceRecord",
+      "description": "Attendance history"
+    },
+    "/scores/{scoreId}": {
+      "schema": "StudentScore",
+      "description": "Student academic scores"
+    },
+    "/evaluations/{evaluationId}": {
+      "schema": "StudentEvaluation",
+      "description": "Teacher evaluations"
+    },
+    "/schedules/{scheduleId}": {
+      "schema": "StudySchedule",
+      "description": "Study planner items"
+    },
+    "/notes/{noteId}": {
+      "schema": "StudyNote",
+      "description": "Study notes"
+    }
+  }
+}

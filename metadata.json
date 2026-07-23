@@ -1,0 +1,7 @@
+{
+  "name": "Grade11 Class Attendance System",
+  "description": "A professional attendance management, student evaluation, and AI-powered insights platform for Happy Chandara School, supporting teachers and students with predictive absenteeism analytics and academic feedback.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
